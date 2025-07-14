@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="login-container">
+    <img src="{{ url_for('static', filename='logo.jpg') }}" alt="NBK Pay Logo" class="login-logo">
+
+    <h2 class="login-title">NBK Pay Admin Login</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-messages">
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST" class="form-wrap">
+      <label for="username">User ID:</label>
+      <input type="text" id="username" name="username" required autofocus autocomplete="username">
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required autocomplete="current-password">
+
+      <button type="submit" class="login-btn">Login</button>
+    </form>
+  </div>
+{% endblock %}

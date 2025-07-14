@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="home-container">
+    <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Logo" class="logo-img">
+    <h2>NBK Pay Terminal</h2>
+    <p>Welcome to your secure Android payment terminal.<br>Choose an action below:</p>
+    <div class="action-buttons">
+        <a href="{{ url_for('amount') }}" class="btn btn-success">Withdraw</a>
+        <a href="{{ url_for('dashboard') }}" class="btn btn-info">Dashboard</a>
+        <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+    </div>
+</div>
+<style>
+.home-container {max-width:340px;margin:60px auto;padding:32px 20px;background:#fff;border-radius:13px;box-shadow:0 2px 16px #0075e220;text-align:center;}
+.logo-img {width:54px;height:54px;border-radius:8px;margin-bottom:18px;}
+.action-buttons {margin-top:30px;}
+.btn {display:block;width:100%;margin-bottom:12px;padding:12px 0;font-size:1.08em;border-radius:6px;border:none;text-decoration:none;}
+.btn-success {background:#2ecc40;color:#fff;}
+.btn-info {background:#0075E2;color:#fff;}
+.btn-danger {background:#e74c3c;color:#fff;}
+</style>
+{% endblock %}

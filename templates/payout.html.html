@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="payout-container">
+    <h2 class="section-title">Choose Payout Method</h2>
+    <form action="/payout" method="post" onsubmit="return validateWallet();" class="form-wrap">
+        <label class="radio-label">
+            <input type="radio" name="method" value="bank" required onchange="toggleWalletFields()"> Bank Transfer
+        </label>
+        <input type="text" id="bank_details" name="bank_details" placeholder="IBAN or Account Number" style="display:none;">
+
+        <label class="radio-label">
+            <input type="radio" name="method" value="USDT_ERC20" required onchange="toggleWalletFields()"> USDT (ERC-20)
+        </label>
+        <input type="text" id="erc20_wallet" name="erc20_wallet" placeholder="0x... ERC20 Address" style="display:none;">
+
+        <label class="radio-label">
+            <input type="radio" name="method" value="USDT_TRC20" required onchange="toggleWalletFields()"> USDT (TRC-20)
+        </label>
+        <input type="text" id="trc20_wallet" name="trc20_wallet" placeholder="T... TRC20 Address" style="display:none;">
+
+        <label class="radio-label">
+            <input type="radio" name="method" value="USDC_TRON" required onchange="toggleWalletFields()"> USDC (TRON)
+        </label>
+        <input type="text" id="usdc_tron_wallet" name="usdc_tron_wallet" placeholder="T... USDC TRON Address" style="display:none;">
+
+        <button type="submit" class="login-btn">Continue</button>
+    </form>
+</div>
+<script>
+function toggleWalletFields() {
+    const method = document.querySelector('input[name="method"]:checked')?.value;
+    document.getElementById('bank_details').style.display = (method === "bank") ? 'block' : 'none';
+    document.getElementById('erc20_wallet').style.display = (method === "USDT_ERC20") ? 'block' : 'none';
+    document.getElementById('trc20_wallet').style.display = (method === "USDT_TRC20") ? 'block' : 'none';
+    document.getElementById('usdc_tron_wallet').style.display = (method === "USDC_TRON") ? 'block' : 'none';
+}
+window.addEventListener('DOMContentLoaded', toggleWalletFields);
+
+function validateWallet() {
+    const method = document.querySelector('input[name="method"]:checked')?.value;
+    const bank = document.getElementById('bank_details').value.trim();
+    const erc = document.getElementById('erc20_wallet').value.trim();
+    const trc = document.getElementById('trc20_wallet').value.trim();
+    const usdc = document.getElementById('usdc_tron_wallet').value.trim();
+
+    if (method === "bank" && bank.length < 10) {
+        alert("Please enter a valid bank account or IBAN.");
+        return false;
+    } else if (method === "USDT_ERC20") {
+        if (!erc.startsWith("0x") || erc.length !== 42) {
+            alert("Invalid ERC-20 address. Must start with '0x' and be 42 characters.");
+            return false;
+        }
+    } else if (method === "USDT_TRC20" || method === "USDC_TRON") {
+        const addr = (method === "USDT_TRC20") ? trc : usdc;
+        if (!addr.startsWith("T") || addr.length < 34) {
+            alert("Invalid TRON address. Must start with 'T' and be at least 34 characters.");
+            return false;
+        }
+    } else {
+        alert("Please select a payout method.");
+        return false;
+    }
+    return true;
+}
+</script>
+{% endblock %}
