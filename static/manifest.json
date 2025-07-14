@@ -1,0 +1,25 @@
+{
+  "name": "NBK Pay POS",
+  "short_name": "NBKPayPOS",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0075E2",
+  "theme_color": "#FFD600",
+  "description": "Next-generation POS Terminal Simulation for NBK Pay Merchants.",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/static/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/static/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
