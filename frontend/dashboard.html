@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="dashboard-container">
+    <h2 class="section-title">Welcome, {{ user_name }}!</h2>
+    <p>Terminal ID: <strong>{{ terminal_id }}</strong></p>
+    <div style="margin-top: 24px;">
+        <button class="btn btn-warning" onclick="openChangePasswordModal()">Change Password</button>
+        <a href="{{ url_for('logout') }}" class="btn btn-danger" style="margin-left:12px;">Logout</a>
+    </div>
+</div>
+
+<!-- Password Change Modal -->
+<div id="changePasswordModal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <span class="close" onclick="closeChangePasswordModal()">&times;</span>
+    <h3>Change Password</h3>
+    <form id="changePasswordForm" method="POST" action="{{ url_for('change_password') }}">
+        <label for="old_password">Current Password:</label>
+        <input type="password" name="old_password" id="old_password" required>
+        
+        <label for="new_password">New Password:</label>
+        <input type="password" name="new_password" id="new_password" required minlength="6">
+        
+        <button type="button" id="sendOtpBtn" onclick="sendOtp()" style="margin-top:12px;">Send OTP</button>
+        
+        <div id="otpSection" style="display:none; margin-top:12px;">
+            <label for="otp">OTP Code (sent to your email/SMS):</label>
+            <input type="text" name="otp" id="otp" required maxlength="6">
+            <button type="submit" class="btn btn-success" style="margin-top:8px;">Change Password</button>
+        </div>
+        <div id="otpMsg" style="margin-top:8px;color:green;display:none;">OTP sent! Please check your email/SMS.</div>
+    </form>
+  </div>
+</div>
+
+<style>
+.dashboard-container { max-width: 400px; margin: 64px auto 0; background: #fff; padding: 32px; border-radius: 14px; box-shadow: 0 2px 24px #0001;}
+.modal { display: none; position: fixed; z-index: 1111; left: 0; top: 0; width: 100vw; height: 100vh; overflow: auto; background: rgba(0,0,0,0.5);}
+.modal-content { background: #fff; margin: 10% auto; padding: 28px 26px; border-radius: 10px; width: 100%; max-width: 350px; position: relative;}
+.close { position: absolute; right: 12px; top: 8px; font-size: 24px; cursor: pointer;}
+input[type="password"],input[type="text"] {width:100%;margin:5px 0 12px 0;padding:8px;border:1px solid #ccc;border-radius:5px;}
+.btn {padding:8px 16px;border:none;border-radius:5px;cursor:pointer;}
+.btn-warning {background:#FFD600;color:#333;}
+.btn-danger {background:#e74c3c;color:#fff;}
+.btn-success {background:#2ecc40;color:#fff;}
+</style>
+<script>
+function openChangePasswordModal() {
+    document.getElementById('changePasswordModal').style.display = 'block';
+}
+function closeChangePasswordModal() {
+    document.getElementById('changePasswordModal').style.display = 'none';
+    // Reset form and OTP UI
+    document.getElementById('changePasswordForm').reset();
+    document.getElementById('otpSection').style.display = 'none';
+    document.getElementById('otpMsg').style.display = 'none';
+}
+window.onclick = function(event) {
+    var modal = document.getElementById('changePasswordModal');
+    if (event.target == modal) {
+        closeChangePasswordModal();
+    }
+}
+
+// AJAX: Send OTP
+function sendOtp() {
+    var old_password = document.getElementById('old_password').value;
+    var new_password = document.getElementById('new_password').value;
+    if (!old_password || !new_password) {
+        alert('Fill old and new password fields first.');
+        return;
+    }
+    fetch('{{ url_for("send_otp") }}', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json','X-CSRFToken': "{{ csrf_token() if csrf_token else '' }}"},
+        body: JSON.stringify({old_password: old_password, new_password: new_password})
+    })
+    .then(r => r.json())
+    .then(res => {
+        if(res.success) {
+            document.getElementById('otpSection').style.display = 'block';
+            document.getElementById('otpMsg').style.display = 'block';
+        } else {
+            alert(res.message || 'Could not send OTP.');
+        }
+    });
+}
+</script>
+{% endblock %}

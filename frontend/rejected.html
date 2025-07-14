@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="rejected-container">
+    <h2 class="section-title" style="color:#e74c3c;">Transaction Rejected</h2>
+    <p class="reject-message">{{ reject_reason or "Your transaction could not be processed." }}</p>
+    <img src="{{ url_for('static', filename='icons/icon-192.png') }}" alt="Rejected" class="rejected-img">
+    <a href="{{ url_for('home') }}" class="btn btn-info" style="margin-top:20px;">Return to Home</a>
+</div>
+<style>
+.rejected-container {max-width:330px;margin:60px auto;padding:30px 18px;background:#fff;border-radius:12px;box-shadow:0 2px 16px #e74c3c22;text-align:center;}
+.reject-message {color:#e74c3c;margin-bottom:22px;font-size:1.07em;}
+.rejected-img {width:54px;height:54px;margin-bottom:10px;}
+.btn-info {background:#0075E2;color:#fff;border:none;width:100%;padding:10px 0;border-radius:6px;}
+.section-title {margin-bottom:16px;}
+</style>
+{% endblock %}
