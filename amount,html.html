@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="amount-container">
+    <h3 class="section-title">Enter Withdrawal Amount</h3>
+    <form method="POST" action="{{ url_for('amount') }}" class="form-wrap">
+        <label for="amount">Amount to Withdraw:</label>
+        <input type="text" id="amount" name="amount" required pattern="^\d+(\.\d{1,2})?$" inputmode="decimal" placeholder="e.g. 100">
+        <button type="submit" class="login-btn">Next</button>
+    </form>
+</div>
+{% endblock %}
