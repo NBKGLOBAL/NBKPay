@@ -9,5 +9,3 @@ bcrypt
 pyotp
 qrcode
 pillow
-pyiso8583
-tronpy
