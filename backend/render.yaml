@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: nbk-pay-pos
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python app.py
+    envVars:
+      - key: SECRET_KEY
+        value: nbkpay_secret_key_8583
+      - key: FLASK_ENV
+        value: production
+      - key: SMTP_SERVER
+        value: smtp.gmail.com               # Or your private SMTP server
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_USER
+        value: info@nbklogistics.store    # Gmail or private domain
+      - key: SMTP_PASS
+        value: your_app_password_or_private_smtp_password
+      - key: TWILIO_ACCOUNT_SID
+        value: your_twilio_account_sid
+      - key: TWILIO_AUTH_TOKEN
+        value: your_twilio_auth_token
+      - key: TWILIO_PHONE_NUMBER
+        value: your_twilio_phone_number
+      - key: VAPID_PUBLIC_KEY
+        value: your_webpush_vapid_public_key
+      - key: VAPID_PRIVATE_KEY
+        value: your_webpush_vapid_private_key
