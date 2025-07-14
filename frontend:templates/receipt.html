@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="receipt-container">
+    <h2 class="section-title">Transaction Receipt</h2>
+    <div class="receipt-details">
+        <p><strong>Date:</strong> {{ receipt.date }}</p>
+        <p><strong>Terminal ID:</strong> {{ receipt.terminal_id }}</p>
+        <p><strong>Amount:</strong> {{ receipt.amount }} {{ receipt.currency }}</p>
+        <p><strong>Method:</strong> {{ receipt.method }}</p>
+        <p><strong>Status:</strong> <span class="paid">{{ receipt.status }}</span></p>
+        <p><strong>Reference:</strong> {{ receipt.ref }}</p>
+    </div>
+    <button class="btn btn-success" onclick="window.print()">Print Receipt</button>
+    <a href="{{ url_for('home') }}" class="btn btn-info" style="margin-top:14px;">Back to Home</a>
+</div>
+<style>
+.receipt-container {max-width:350px;margin:60px auto;padding:30px 20px;background:#fff;border-radius:12px;box-shadow:0 2px 16px #0075e220;}
+.section-title {color:#0075E2;}
+.receipt-details {margin-bottom:26px;}
+.receipt-details p {margin:7px 0;font-size:1.04em;}
+.paid {color:#2ecc40;font-weight:600;}
+.btn {width:100%;margin-bottom:7px;padding:10px 0;font-size:1.08em;border-radius:6px;}
+.btn-success {background:#2ecc40;color:#fff;border:none;}
+.btn-info {background:#0075E2;color:#fff;border:none;}
+</style>
+{% endblock %}

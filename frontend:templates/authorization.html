@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="auth-container">
+    <h2 class="section-title">Terminal Authorization</h2>
+    <form method="POST" action="{{ url_for('authorize') }}">
+        <label for="terminal_id">Terminal ID</label>
+        <input type="text" name="terminal_id" id="terminal_id" required placeholder="Enter Terminal ID">
+        <label for="auth_code">Authorization Code</label>
+        <input type="password" name="auth_code" id="auth_code" required placeholder="Enter Auth Code">
+        <button type="submit" class="btn btn-primary">Authorize</button>
+    </form>
+    {% if error %}
+      <p class="error-msg">{{ error }}</p>
+    {% endif %}
+</div>
+<style>
+.auth-container {max-width:350px;margin:60px auto;padding:28px 22px;background:#fff;border-radius:12px;box-shadow:0 2px 16px #0075e220;}
+.section-title {color:#0075E2;}
+.btn-primary {background:#0075E2;color:#fff;padding:10px;border:none;border-radius:5px;width:100%;font-size:1.1em;}
+input {width:100%;padding:8px;margin-bottom:12px;border:1px solid #bbb;border-radius:5px;}
+.error-msg {color:#e74c3c;margin-top:8px;}
+</style>
+{% endblock %}

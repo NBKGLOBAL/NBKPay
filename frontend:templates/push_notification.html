@@ -1,0 +1,14 @@
+// Request notification permission and subscribe user
+if ('serviceWorker' in navigator && 'PushManager' in window) {
+  navigator.serviceWorker.ready.then(function(registration) {
+    return registration.pushManager.getSubscription()
+      .then(function(subscription) {
+        if (!subscription) {
+          return registration.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: "<YOUR_PUBLIC_VAPID_KEY>"
+          });
+        }
+      });
+  });
+}

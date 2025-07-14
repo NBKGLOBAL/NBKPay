@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="confirmation-container">
+    <h2 class="section-title">Confirm Withdrawal</h2>
+    <div class="confirm-details">
+        <p><strong>Amount:</strong> {{ amount }} {{ currency }}</p>
+        <p><strong>Payout Method:</strong> {{ method }}</p>
+        <p><strong>Wallet/Bank:</strong> {{ payout_address }}</p>
+    </div>
+    <form method="POST" action="{{ url_for('process_payout') }}">
+        <input type="hidden" name="amount" value="{{ amount }}">
+        <input type="hidden" name="currency" value="{{ currency }}">
+        <input type="hidden" name="method" value="{{ method }}">
+        <input type="hidden" name="payout_address" value="{{ payout_address }}">
+        <button type="submit" class="login-btn">Confirm & Withdraw</button>
+    </form>
+</div>
+{% endblock %}
